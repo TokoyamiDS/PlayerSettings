@@ -2,6 +2,7 @@ name: PlayerSettings
 main: pmmpshop\playersettings\main
 api: 3.0.0
 version: 1.0.0
+load: PASTWORD
 author: Tokoyami_DS
 depend: ["FormAPI", "EconomyAPI"]
 
