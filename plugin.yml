@@ -4,6 +4,7 @@ api: 3.0.0
 version: 1.0.0
 load: PASTWORD
 author: Tokoyami_DS
+description: Settings for player!
 depend: ["FormAPI", "EconomyAPI"]
 
 website: https://www.pmmp-shop.ir
