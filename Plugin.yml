@@ -1,0 +1,11 @@
+name: PlayerSettings
+main: pmmpshop\playersettings\main
+api: 3.0.0
+version: 1.0.0
+author: Tokoyami_DS
+
+website: https://www.pmmp-shop.ir
+
+commands: 
+ psui:
+  description: "player settings"
