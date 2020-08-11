@@ -17,25 +17,19 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemConsumeEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 
 use pocketmine\utils\TextFormat as T;
-use pocketmine\utils\Config;
 
 use onebone\economyapi\EconomyAPI;
 
-use jojoe77777\FormAPI;
-use jojoe77777\formapi\SimpleForm;
-use jojoe77777\formapi\CustomForm;
-
-use onebone\economyapi\EconomyAPI;
+use pmmpshop\playersettings\jojoe77777\FormAPI\FormAPI;
+use pmmpshop\playersettings\jojoe77777\FormAPI\SimpleForm;
+use pmmpshop\playersettings\jojoe77777\FormAPI\CustomForm;
 
 class Main extends PluginBase implements Listener {
 	
-	private $nickcfg;
-	
-	
 	public function onEnable(){
-		$this->nickcfg = new Config($this->getDataFolder() . "nicks.yml", Config::YAML);
 		$this->getserver()->getPluginManager()->registerEvents($this, $this);
 		$this->getLogger()->info(T::GREEN . " PlayerSettings Has started.!");
 	}
@@ -47,8 +41,8 @@ class Main extends PluginBase implements Listener {
 	public function onCommand (CommandSender $sender, Command $cmd, string $label, array $args) : bool {
 	    switch($cmd->getName()){
 		    case "psui":
-                    $item = Item::get(397, 3, 64)->setCustomName("§l§ePlayerSettings");
-                    $sender->getInventory()->addItem($item);
+                $item = Item::get(397, 3, 64)->setCustomName("§l§ePlayerSettings");
+                $sender->getInventory()->addItem($item);
 	        break;
 		
         }
@@ -77,7 +71,7 @@ class Main extends PluginBase implements Listener {
                     $this->openFeed($player);
                     break;
 				case 1:
-                    $this->openNick($player);
+                    $player->sendMessage("Soon...");
                     break;
 				case 2:
                     $this->openFly($player);
@@ -119,31 +113,7 @@ class Main extends PluginBase implements Listener {
 		$form->sendToPlayer($player);
 		return $form;
     }
-	
-	public function openNick(Player $player){
 		
-		$api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-		$form = $api->createCustomForm(function(Player $player, array $data = null){
-			if($data[0] === null){
-				return true;
-			}
-            if($result != null){
-				$this->nickcfg->setNested($player->getName() . ".custom name", $data[0]);
-				$this->nickcfg->setNested($player->getName() . ".normal name", $player->getName());
-				$this->nickcfg->save();
-				$player->setDisplayName($this->nickcfg->getNested($player->getName() . ".custom name"));
-				$player->setNameTag($this->nickcfg->getNested($player->getName() . ".custom name"));
-				$player->sendMessage("§eDein Name ist nun §c" . $this->nickcfg->getNested($player->getName() . ".custom name"). "§e!");
-					return true;
-				}
-        });
-        $form->setTitle("Change Name");
-		$Form->addLable("k");
-		$form->addInput("Change Name", "Enter your new name here");
-        $form->sendToPlayer($player);
-		return $form;
-    }
-	
 	public function openFly(Player $player){
 	    
         $api = $this->getServer()->getPluginManager()->getplugin("FormAPI");
@@ -203,8 +173,8 @@ class Main extends PluginBase implements Listener {
             switch($result) {
                 case 0:
                     $mymoney = EconomyAPI::getInstance()->myMoney($player);
-					$player->sendMessage("You have " . $mymoney . "money");
-					$player->addTitle("Your Money:", . $mymoney . "$");
+					$player->sendMessage("You have " . $mymoney . " money");
+					$player->addTitle("Your Money: " . $mymoney . " $");
                     break;
 				case 1:
 				    $this->openpay($player);
@@ -254,18 +224,4 @@ class Main extends PluginBase implements Listener {
 		return $form;
     }
 	
-	public function onQuit(PlayerQuitEvent $ev){
-		
-		$player = $ev->getPlayer();
-		
-		if(!$this->nickcfg->exists($player->getName())){
-			return true;
-	    }
-		
-		if($this->nickcfg->exists($player->getName())){
-			$this->nickcfg->remove($player->getName());
-			$this->nickcfg->save();
-			return true;
-		}
-	}
 }
