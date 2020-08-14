@@ -3,8 +3,7 @@ main: pmmpshop\playersettings\main
 api: 3.0.0
 version: 1.0.5
 author: Tokoyami_DS
-description: Settings for player!
-depend: ["FormAPI", "EconomyAPI"]
+depend: ["EconomyAPI"]
 
 website: https://www.pmmp-shop.ir
 
