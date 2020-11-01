@@ -1,11 +1,9 @@
 name: PlayerSettings
-main: TokoyamiDS\playersettings\Main
+main: pmmpshop\playersettings\Main
 api: 3.0.0
 version: 1.0.5
 author: Tokoyami_DS
 depend: ["EconomyAPI"]
-
-website: https://www.pmmp-shop.ir
 
 commands: 
  psui:
