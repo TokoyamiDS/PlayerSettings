@@ -1,5 +1,5 @@
 name: PlayerSettings
-main: pmmpshop\playersettings\main
+main: TokoyamiDS\playersettings\Main
 api: 3.0.0
 version: 1.0.5
 author: Tokoyami_DS
